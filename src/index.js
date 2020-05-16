@@ -1,13 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import './animate.css';
-import './materialize.min.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./css/index.css";
+import "./css/animate.css";
+import "./assets/materialize/materialize.min.css";
 
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById('rubicon'));
-
-
-serviceWorker.unregister();
+ReactDOM.render(<App />, document.getElementById("root"));

@@ -1,1 +1,9 @@
 node_modules
+build
+
+# config
+src/config/config.js
+
+# firebase config files
+.firebaserc
+firebase.json

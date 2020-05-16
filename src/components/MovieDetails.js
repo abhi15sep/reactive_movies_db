@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
-import Header from './Header';
-import moment from 'moment';
-import { BrowserRouter } from 'react-router-dom';
-import GetDetails from './GetDetails';
-import GetCredits from './GetCredits';
-
+import React, { Component } from "react";
+import Header from "./Header";
+import moment from "moment";
+import { BrowserRouter } from "react-router-dom";
+import GetDetails from "./GetDetails";
+import GetCredits from "./GetCredits";
 
 class MovieDetails extends Component {
-
   constructor(props) {
-    super()
+    super();
     this.state = {
       movie: [],
       credits: "",
       movieLoading: true,
-    }
+    };
   }
 
   componentDidMount() {
@@ -26,12 +24,12 @@ class MovieDetails extends Component {
     const data = GetDetails("movie", id);
     const credits = GetCredits("movie", id);
 
-    data.then(data => this.setState({ movie: data, movieLoading: false }))
-    credits.then(data => this.setState({ credits: data }))
-  }
+    data.then((data) => this.setState({ movie: data, movieLoading: false }));
+    credits.then((data) => this.setState({ credits: data }));
+  };
   timeConvert(n) {
     var num = n;
-    var hours = (num / 60);
+    var hours = num / 60;
     var rhours = Math.floor(hours);
     var minutes = (hours - rhours) * 60;
     var rminutes = Math.round(minutes);
@@ -47,126 +45,167 @@ class MovieDetails extends Component {
     if (movie) {
       const rating = movie.vote_average * 10;
       const VoteBar = {
-        width: rating + "%"
-      }
+        width: rating + "%",
+      };
       const backdropImg = {
-        backgroundImage: 'url(' + backdropPath + movie.backdrop_path + ' )',
-        backgroundPositionX: '0',
-        backgroundPositionY: '0%',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
-      }
+        backgroundImage: "url(" + backdropPath + movie.backdrop_path + " )",
+        backgroundPositionX: "0",
+        backgroundPositionY: "0%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      };
 
       if (movie.genres) {
-        Genres = <div className="s12 m12 l12">
-          {movie.genres.map((g, i) => {
-            return (
-              <p>{g.name}</p>
-            );
-          })
-          }
-        </div>
+        Genres = (
+          <div className="s12 m12 l12">
+            {movie.genres.map((g, i) => {
+              return <p>{g.name}</p>;
+            })}
+          </div>
+        );
       }
 
       if (movie.production_companies) {
-        Production = <div className="s12 m12 l12">
-          {movie.production_companies.map((n, i) => {
-            return (
-              <div className="s12" key={i} >
-                {n.logo_path ? <img className="responsive-img" src={"https://image.tmdb.org/t/p/h30" + n.logo_path} alt={n.name} /> : <p>{n.name}</p>}
-
-              </div>
-            );
-          })
-          }
-        </div>
+        Production = (
+          <div className="s12 m12 l12">
+            {movie.production_companies.map((n, i) => {
+              return (
+                <div className="s12" key={i}>
+                  {n.logo_path ? (
+                    <img
+                      className="responsive-img"
+                      src={"https://image.tmdb.org/t/p/h30" + n.logo_path}
+                      alt={n.name}
+                    />
+                  ) : (
+                    <p>{n.name}</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        );
       }
 
-      MovieData = <div className="row ">
-        <div className="darken-4 backdrops animated fadeIn " style={backdropImg} >
-          <div className="custom_bg">
-            <div className={"container"}  >
-              <div className="row   ">
-                <div className="col s12 m12 col-tv ">
-                  <div className="card responsive horizontal no-background z-depth-0 ">
-                    <div className="card-image card-tv-img">                      
-                      { movie.poster_path ? <img className="responsive-img" src={img_path + movie.poster_path} alt={movie.original_title} /> : <div className="no_image_cast"><i className="material-icons left">burst_mode</i>  </div> }
-                    </div>
-                    <div className="card-stacked ">
-                      <div className="card-content white-text card-content-text content-title">
-                        <h4>{movie.original_title} <small className="grey-text">({moment(movie.first_air_date).format('YYYY')})</small> </h4>
+      MovieData = (
+        <div className="row ">
+          <div
+            className="darken-4 backdrops animated fadeIn "
+            style={backdropImg}
+          >
+            <div className="custom_bg">
+              <div className={"container"}>
+                <div className="row   ">
+                  <div className="col s12 m12 col-tv ">
+                    <div className="card responsive horizontal no-background z-depth-0 ">
+                      <div className="card-image card-tv-img">
+                        {movie.poster_path ? (
+                          <img
+                            className="responsive-img"
+                            src={img_path + movie.poster_path}
+                            alt={movie.original_title}
+                          />
+                        ) : (
+                          <div className="no_image_cast">
+                            <i className="material-icons left">burst_mode</i>{" "}
+                          </div>
+                        )}
+                      </div>
+                      <div className="card-stacked ">
+                        <div className="card-content white-text card-content-text content-title">
+                          <h4>
+                            {movie.original_title}{" "}
+                            <small className="grey-text">
+                              ({moment(movie.first_air_date).format("YYYY")})
+                            </small>{" "}
+                          </h4>
 
-                        <div className="col s12 card-title-btn ">
-                          <div className="white-text" >
-                            <button className="btn-floating btn waves-effect waves-light "> {rating + "%"} </button>
-                            <span>  User Score</span>
+                          <div className="col s12 card-title-btn ">
+                            <div className="white-text">
+                              <button className="btn-floating btn waves-effect waves-light ">
+                                {" "}
+                                {rating + "%"}{" "}
+                              </button>
+                              <span> User Score</span>
+                            </div>
+                            <div className="progress col m3">
+                              <div
+                                className="determinate "
+                                style={VoteBar}
+                              ></div>
+                            </div>
                           </div>
-                          <div className="progress col m3">
-                            <div className="determinate " style={VoteBar} ></div>
+                          <div className="col s12">
+                            <h5>Overview</h5>
+                            <p className="tv-overview">
+                              {movie.overview
+                                ? movie.overview
+                                : "Not Available"}
+                            </p>
                           </div>
-                        </div>
-                        <div className="col s12" >
-                          <h5>Overview</h5>
-                          <p className="tv-overview" >{movie.overview ? movie.overview: "Not Available"}</p>
                         </div>
                       </div>
+                      <div className="clearfix"></div>
                     </div>
-                    <div className="clearfix"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="container">
-          <div className="row ">
-            <div className="col s12 m12 l8 ">
-              <h5>Top Billed Cast</h5>
-              {CreditData}
-            </div>
-            <div className="col s12 m12 l4 teal lighten-5 ">
-              <h5>Facts</h5>
-              <div>
-                <button href={movie.homepage} className="btn-flat" target="_blank" >
-                  <i className="material-icons left">insert_link</i>
-                </button>
-                <h6 className="strong">Status</h6>
-                {movie.status}
-                
-                <h6 className="strong">Runtime</h6>
-                {this.timeConvert(movie.runtime)}
-                
-                <h6 className="strong">Genre</h6>
-                <p>{Genres}</p>
+          <div className="container">
+            <div className="row ">
+              <div className="col s12 m12 l8 ">
+                <h5>Top Billed Cast</h5>
+                {CreditData}
               </div>
-              
-              <h6 className="strong">Production</h6>
-              <p>{Production}</p>
-             
-              <div className="clearfix"></div>
-            
+              <div className="col s12 m12 l4 teal lighten-5 ">
+                <h5>Facts</h5>
+                <div>
+                  <button
+                    href={movie.homepage}
+                    className="btn-flat"
+                    target="_blank"
+                  >
+                    <i className="material-icons left">insert_link</i>
+                  </button>
+                  <h6 className="strong">Status</h6>
+                  {movie.status}
+
+                  <h6 className="strong">Runtime</h6>
+                  {this.timeConvert(movie.runtime)}
+
+                  <h6 className="strong">Genre</h6>
+                  <p>{Genres}</p>
+                </div>
+
+                <h6 className="strong">Production</h6>
+                <p>{Production}</p>
+
+                <div className="clearfix"></div>
+              </div>
             </div>
           </div>
         </div>
-
-      </div>
+      );
     }
 
-    loading = <div className="progress">
-      <div className="indeterminate"></div>
-    </div>
+    loading = (
+      <div className="progress">
+        <div className="indeterminate"></div>
+      </div>
+    );
 
     return (
       <div>
-        <BrowserRouter basename="rubicon/content" />
+        <BrowserRouter basename="/content" />
         <Header />
-        <div className="" >
+        <div className="">
           <div className="row">
             {this.state.movieLoading ? loading : MovieData}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
